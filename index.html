@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" href="css/onsenui.css">
+	<link rel="stylesheet" href="css/onsen-css-components.min.css">
+	<script src="js/onsenui.min.js"></script>
+	<script src="js/app.js"></script>
+	<title>Medical | Klinik Umum</title>
+
+	<script>
+		ons.platform.select("android");
+	</script>
+</head>
+
+<body>
+	<ons-navigator id="myNavigator" page="loginpage" animation="fade"></ons-navigator>
+
+	<template id="loginpage">
+		<ons-page>
+			<ons-card style="background-color: #38B6FF;">
+				<!-- Logo -->
+				<div style="text-align : center; margin-top:10px;">
+					<img src="img/logo_medical.png" width="48%">
+				</div>
+
+				<div style="margin-left: 15%;">
+					<!-- Input Username -->
+					<ons-list-item style="width: 75%;">
+						<ons-col>
+							<div style="margin-top: 15px;">
+								<ons-input id="username"
+									style="background-color: white; border: 1px solid #ccc; border-radius: 4px; padding-left: 10px;padding-right: 10px; padding-top: 5px;padding-bottom: 5px;margin-bottom: 5px;width: 95%;"></ons-input>
+								<br />
+								<label style="color:#fff">
+									Username
+								</label>
+							</div>
+						</ons-col>
+					</ons-list-item>
+					<!-- Input Password -->
+					<ons-list-item style="width: 75%;">
+						<ons-col>
+							<div style="margin-top: 15px;">
+								<ons-input id="password" type="password"
+									style="background-color: white; border: 1px solid #ccc; border-radius: 4px; padding-left: 10px;padding-right: 10px; padding-top: 5px;padding-bottom: 5px;margin-bottom: 5px;width: 95%;"></ons-input>
+								<br />
+								<label style="color:#fff">
+									Password
+								</label>
+							</div>
+						</ons-col>
+					</ons-list-item>
+
+				</div>
+
+				</ons-list>
+
+				<!-- Tombol Login -->
+				<div style="text-align : center; margin-top: 70px;">
+					<ons-button onclick="login()" modifier="large"
+						style="background: linear-gradient(317deg, rgba(0,195,255,1) 0%, rgba(255,255,28,1) 73%, rgba(255,255,28,1) 100%);width: 70%;color:#333">Login</ons-button>
+				</div>
+
+			</ons-card>
+		</ons-page>
+	</template>
+
+	<template id="beranda">
+		<ons-page>
+			<ons-splitter>
+				<ons-splitter-side id="menu" side="right" width="50%" collapse swipeable>
+					<ons-page>
+						<ons-list>
+							<ons-list-item onclick="fn.load('homepage')" tappable>
+								Beranda
+							</ons-list-item>
+							<ons-list-item onclick="fn.load('antrianpage')" tappable>
+								Antrian
+							</ons-list-item>
+							<ons-list-item onclick="myNavigator.pushPage('loginpage');location.reload();" tappable>
+								Logout
+							</ons-list-item>
+						</ons-list>
+					</ons-page>
+				</ons-splitter-side>
+				<ons-splitter-content id="content" page="homepage"></ons-splitter-content>
+			</ons-splitter>
+
+			<template id="homepage">
+				<ons-page>
+					<ons-toolbar>
+						<div class="right">
+							<ons-toolbar-button onclick="fn.open()">
+								<ons-icon icon="md-menu"></ons-icon>
+							</ons-toolbar-button>
+						</div>
+						<div class="center">
+							Beranda | Medical
+						</div>
+					</ons-toolbar>
+
+					<div style="text-align : center; margin-top:10px;">
+						<img src="img/logo_medical.png" width="100%">
+					</div>
+				</ons-page>
+			</template>
+
+
+			<template id="antrianpage">
+				<ons-page>
+					<ons-toolbar>
+						<div class="center">
+							<a onclick="fn.load('homepage')">
+								<ons-icon icon="md-arrow-back">
+								</ons-icon>
+							</a>
+							<span style="margin-left: 20px;">Antrian</span>
+
+						</div>
+					</ons-toolbar>
+
+					<ons-tabbar swipeable position="auto" animation="none">
+						<ons-tab page="current_antrian_page" label="Current Antrian" icon="fa-user-circle"
+							active-icon="fa-user-circle"></ons-tab>
+						<ons-tab page="daftar_dokter" label="Daftar Dokter" icon="fa-bars" active-icon="fa-bars">
+						</ons-tab>
+						<ons-tab page="tambah_antrian" label="Tambah Antrian" icon="fa-plus" active-icon="fa-plus"
+							id="tab_tambah_antrian">
+						</ons-tab>
+					</ons-tabbar>
+				</ons-page>
+			</template>
+
+			<template id="current_antrian_page">
+				<ons-page id="current_antrian_page">
+					<ons-card style="background-color: #38B6FF;color: #fff;">
+						<div style="text-align:center">
+							<h3>Nomor Antrian</h3>
+							<span id="nomor_tampil"
+								style="font-size: 200px; margin-bottom: 0px;margin-top: 20px;padding-bottom:0px;">1
+							</span>
+							<h2 id="nama_tampil" style="font-size: 30px;margin-top: 0px;padding-top: 0px;">Nama
+								Pengantri</h2>
+							<h2 id="dokter_tampil" style="font-size: 20px;margin-top: 0px;padding-top: 0px;">Dokter
+								Spesialis</h2>
+						</div>
+					</ons-card>
+					<script>
+						document.getElementById('nomor_tampil').textContent = localStorage.getItem("id");
+						(localStorage.getItem("nama") === null) ? "" : document.getElementById('nama_tampil').textContent = localStorage.getItem("nama");
+						(localStorage.getItem("dokter") === null) ? "" : document.getElementById('dokter_tampil').textContent = localStorage.getItem("dokter");
+					</script>
+				</ons-page>
+			</template>
+
+			<template id="daftar_dokter">
+				<ons-page id="daftar_dokter>
+					<div
+						style="text-align: left; margin-top: 20px; padding: 10px;background-color: #38B6FF;color: #fff;">
+						<ons-list style="padding: 20px;background-color: #38B6FF;">
+							<ons-row style="border:1px solid #fff;text-align: center;">
+								<ons-col width="50px"
+									style="border:1px solid #fff;padding: 5px;font-weight: 900;">No</ons-col>
+								<ons-col style="border:1px solid #fff;padding: 5px;font-weight: 900;">Nama</ons-col>
+								<ons-col
+									style="border:1px solid #fff;padding: 5px;font-weight: 900;">Spesialis</ons-col>
+							</ons-row>
+							<ons-row style="border:1px solid #fff">
+								<ons-col width="50px"
+									style="border:1px solid #fff;padding: 5px;text-align: center;">1</ons-col>
+								<ons-col style="border:1px solid #fff;padding: 5px;padding-left: 10px;">Jihan,
+									SpOG</ons-col>
+								<ons-col
+									style="border:1px solid #fff;padding: 5px;padding-left: 10px;">Kandungan</ons-col>
+							</ons-row>
+							<ons-row style="border:1px solid #fff">
+								<ons-col width="50px"
+									style="border:1px solid #fff;padding: 5px;text-align: center;">2</ons-col>
+								<ons-col style="border:1px solid #fff;padding: 5px;padding-left: 10px;">Jannah,
+									SpKK</ons-col>
+								<ons-col style="border:1px solid #fff;padding: 5px;padding-left: 10px;">Kulit dan
+									Kelamin</ons-col>
+							</ons-row>
+							<ons-row style="border:1px solid #fff">
+								<ons-col width="50px"
+									style="border:1px solid #fff;padding: 5px;text-align: center;">3</ons-col>
+								<ons-col style="border:1px solid #fff;padding: 5px;padding-left: 10px;">Zaki,
+									SpA</ons-col>
+								<ons-col style="border:1px solid #fff;padding: 5px;padding-left: 10px;">Anak</ons-col>
+							</ons-row>
+						</ons-list>
+					</div>
+				</ons-page>
+			</template>
+
+			<template id="tambah_antrian">
+				<ons-page id="input">
+					<ons-card style="background-color: #38B6FF;">
+						<div style="margin-left: 15%;">
+							<ons-list-item style="width: 75%;">
+								<ons-col>
+									<div style="margin-top: 15px;">
+										<ons-input id="nama_pengantri"
+											style="background-color: white; border: 1px solid #ccc; border-radius: 4px; padding-left: 10px;padding-right: 10px; padding-top: 5px;padding-bottom: 5px;margin-bottom: 8px;width: 95%;"></ons-input>
+										<br />
+										<label style="color:#fff">
+											Nama Lengkap
+										</label>
+									</div>
+								</ons-col>
+							</ons-list-item>
+							<ons-list-item style="width: 75%;">
+								<ons-col>
+									<div style="margin-top: 15px;">
+										<ons-select id="dokter_spesialis" modifier=""
+											style="background-color: white; border: 1px solid #ccc; border-radius: 4px; padding-left: 10px;padding-right: 10px; padding-top: 5px;padding-bottom: 5px;margin-bottom: 8px;width: 95%;">
+											<option selected disabled value="tanpa kategori"><span
+													class="fa fa-home">Dokter Spesialis</span></option>
+											<option value="Jihan, SpOG - Spesialis Kandungan">Jihan, SpOG - Spesialis
+												Kandungan</option>
+											<option value="Jannah, SpKK - Spesialis Kulit dan Kelamin">Jannah, SpKK -
+												Spesialis Kulit dan Kelamin</option>
+											<option value="Zaki, SpA - Spesialis Anak">Zaki, SpA - Spesialis Anak
+											</option>
+										</ons-select>
+										<label style="color:#fff">
+											Pilih Dokter
+										</label>
+									</div>
+								</ons-col>
+							</ons-list-item>
+						</div>
+
+						</ons-list>
+						<div style="text-align : center; margin-top: 70px;">
+							<ons-button onclick="simpan()" modifier="large"
+								style="background: linear-gradient(317deg, rgba(0,195,255,1) 0%, rgba(255,255,28,1) 73%, rgba(255,255,28,1) 100%);width: 70%;color:#333">Tambah
+								Antrian</ons-button>
+						</div>
+					</ons-card>
+				</ons-page>
+			</template>
+	</template>
+</body>
+
+</html>
